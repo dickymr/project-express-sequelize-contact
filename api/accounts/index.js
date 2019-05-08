@@ -1,7 +1,9 @@
 const router = require('express').Router()
 const controller = require('./controller/controller.js')
+const helpers = require('../helpers/index.js')
 
-router.get('/', controller.get)
+
+router.get('/', helpers.isAuthenticated, controller.get)
 
 router.post('/', controller.post)
 
