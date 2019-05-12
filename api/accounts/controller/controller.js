@@ -2,7 +2,7 @@ const models = require('../../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-exports.get = async (req, res) => {
+exports.getAllAccounts = async (req, res) => {
   try {
     const response = await models.accounts.findAll()
     res.status(200).send({
@@ -16,7 +16,7 @@ exports.get = async (req, res) => {
   }
 }
 
-exports.post = async (req, res) => {
+exports.postCreateAccount = async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync(10)
     req.body.password = bcrypt.hashSync(req.body.password, salt)
@@ -33,7 +33,7 @@ exports.post = async (req, res) => {
   }
 }
 
-exports.delete = async (req, res) => {
+exports.deleteAccount = async (req, res) => {
   try {
     const response = await models.accounts.findByPk(req.params.id)
     await response.destroy()
@@ -48,7 +48,7 @@ exports.delete = async (req, res) => {
   }
 }
 
-exports.put = async (req, res) => {
+exports.updateAccount = async (req, res) => {
   try {
     const response = await models.accounts.findByPk(req.params.id)
 
@@ -85,4 +85,32 @@ exports.postLogin = async (req, res) => {
     message: 'You are logged in',
     token: token
   })
+}
+
+exports.getAllDepartment = async (req, res) => {
+  try {
+    const response = await models.departments.findAll()
+    res.status(200).send({
+      message: 'Find Success',
+      data: response
+    })
+  } catch (error) {
+    res.status(500).send({
+      message: 'Find Error'
+    })
+  }
+}
+
+exports.postCreateDepartment = async (req, res) => {
+  try {
+    const response = await models.departments.create(req.body)
+    res.status(200).send({
+      message: "Insert Success",
+      data: response
+    })
+  } catch (error) {
+    res.status(500).send({
+      message: "Insert Error"
+    })
+  }
 }

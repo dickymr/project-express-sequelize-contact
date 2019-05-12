@@ -14,7 +14,8 @@ app.use(morgan('dev'))
 
 // express router
 const accounts = require('./api/accounts')
-app.use('/accounts', accounts)
+app.use('/', accounts)
+
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`)
